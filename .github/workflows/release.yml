@@ -1,0 +1,37 @@
+name: release
+
+on:
+    push:
+        tags:
+            - "v*"
+
+permissions:
+    contents: write # required to create a release
+
+jobs:
+    goreleaser:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Set up Go
+              uses: actions/setup-go@v5
+              with:
+                  go-version: "1.26" # Matching go.mod
+                  cache: true
+
+            - name: Run GoReleaser
+              uses: goreleaser/goreleaser-action@v6
+              with:
+                  distribution: goreleaser
+                  version: "~> v2"
+                  args: release --clean
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  # Note: If you want to use the 'brews' feature in .goreleaser.yaml,
+                  # you will need to add a secret named HOMEBREW_TAP_GITHUB_TOKEN
+                  # to your repo with permission to push to the tap repository.
+                  # HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
