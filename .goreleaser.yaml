@@ -1,0 +1,50 @@
+version: 2
+project_name: doorloop-pp-cli
+changelog:
+    disable: true
+builds:
+    - id: doorloop-pp-cli
+      main: ./cmd/doorloop-pp-cli
+      binary: doorloop-pp-cli
+      env:
+          - CGO_ENABLED=0
+      ldflags:
+          - -s -w -X doorloop-pp-cli/internal/cli.version={{ .Version }}
+      targets:
+          - darwin_amd64
+          - darwin_arm64
+          - linux_amd64
+          - linux_arm64
+          - windows_amd64
+          - windows_arm64
+    - id: doorloop-pp-mcp
+      main: ./cmd/doorloop-pp-mcp
+      binary: doorloop-pp-mcp
+      env:
+          - CGO_ENABLED=0
+      ldflags:
+          - -s -w
+      targets:
+          - darwin_amd64
+          - darwin_arm64
+          - linux_amd64
+          - linux_arm64
+          - windows_amd64
+          - windows_arm64
+archives:
+    - formats: [tar.gz]
+      name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+      format_overrides:
+          - goos: windows
+            formats: [zip]
+checksum:
+    name_template: checksums.txt
+brews:
+    - name: doorloop-pp-cli
+      repository:
+          owner: craig-collier
+          name: homebrew-tap
+      description: "Every DoorLoop resource at your fingertips, plus offline delinquency reports, vacancy maps, and cash flow snapshots..."
+      install: |
+          bin.install "doorloop-pp-cli"
+          bin.install "doorloop-pp-mcp"

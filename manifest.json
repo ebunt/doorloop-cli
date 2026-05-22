@@ -1,0 +1,39 @@
+{
+  "manifest_version": "0.3",
+  "name": "doorloop-pp-mcp",
+  "display_name": "DoorLoop",
+  "version": "4.9.0",
+  "description": "DoorLoop API surface as MCP tools.",
+  "author": {
+    "name": "CLI Printing Press"
+  },
+  "license": "Apache-2.0",
+  "server": {
+    "type": "binary",
+    "entry_point": "bin/doorloop-pp-mcp",
+    "mcp_config": {
+      "command": "${__dirname}/bin/doorloop-pp-mcp",
+      "args": [],
+      "env": {
+        "DOORLOOP_TOKEN": "${user_config.doorloop_token}"
+      }
+    }
+  },
+  "user_config": {
+    "doorloop_token": {
+      "type": "string",
+      "title": "DOORLOOP_TOKEN",
+      "description": "Sets DOORLOOP_TOKEN for the DoorLoop MCP server.",
+      "sensitive": true,
+      "required": true
+    }
+  },
+  "compatibility": {
+    "claude_desktop": ">=1.0.0",
+    "platforms": [
+      "darwin",
+      "linux",
+      "win32"
+    ]
+  }
+}

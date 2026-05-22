@@ -1,0 +1,65 @@
+{
+    "schema_version": 1,
+    "generated_at": "2026-05-21T01:45:49.466548Z",
+    "printing_press_version": "4.9.0",
+    "api_name": "doorloop",
+    "display_name": "DoorLoop",
+    "cli_name": "doorloop-pp-cli",
+    "owner": "craig-collier",
+    "printer": "ccollier",
+    "printer_name": "Craig Collier",
+    "spec_path": "/Users/eddie/printing-press/.runstate/doorloop-caa1b978/runs/20260520-213010/research/doorloop-spec.yaml",
+    "spec_format": "internal",
+    "spec_checksum": "sha256:4a15ce33f5c1e670cfc93efdd4e1d19d7db9d997d947b2cf728f7ac724fef020",
+    "run_id": "20260520-213010",
+    "mcp_binary": "doorloop-pp-mcp",
+    "mcp_tool_count": 93,
+    "mcp_ready": "full",
+    "api_version": "v1",
+    "auth_type": "bearer_token",
+    "auth_env_vars": [
+        "DOORLOOP_TOKEN"
+    ],
+    "novel_features": [
+        {
+            "name": "Sync",
+            "command": "sync",
+            "description": "Pull all DoorLoop entities into a local SQLite database for instant offline queries."
+        },
+        {
+            "name": "Delinquency Report",
+            "command": "delinquency",
+            "description": "See every tenant with an outstanding balance, with their contact info and days past due — one command instead of three clicks per tenant."
+        },
+        {
+            "name": "Cash Flow Snapshot",
+            "command": "cashflow",
+            "description": "Get income, expenses, and net cash flow per property for any date range — faster than navigating DoorLoop's PDF reports."
+        },
+        {
+            "name": "Lease Ledger",
+            "command": "ledger",
+            "description": "View a chronological bank-statement-style ledger for any lease: every charge, payment, credit, and returned payment with running balance."
+        },
+        {
+            "name": "Vacancy Map",
+            "command": "vacancy",
+            "description": "Find every vacant unit across your portfolio — units with no active lease — with days vacant and last lease end date."
+        },
+        {
+            "name": "Expiring Leases Alert",
+            "command": "expiring",
+            "description": "List all leases expiring within N days with tenant contact info and whether a prospect already exists for the unit."
+        },
+        {
+            "name": "Task Agenda",
+            "command": "tasks agenda",
+            "description": "See today's tasks bucketed as OVERDUE, DUE TODAY, and DUE THIS WEEK — with property and assignee — ready to act on without opening a browser."
+        },
+        {
+            "name": "Portfolio Health",
+            "command": "portfolio-health",
+            "description": "One-row-per-portfolio summary: total units, occupancy rate, total outstanding balance, and leases expiring within 30 days."
+        }
+    ]
+}

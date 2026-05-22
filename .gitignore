@@ -1,0 +1,17 @@
+# Binaries
+bin/
+build/
+doorloop-pp-cli
+doorloop-pp-mcp
+
+# Local Data/Cache
+*.db
+.cache/
+
+# Sensitive info
+.env
+config.json
+
+# Test results
+*-results.json
+*-report.json

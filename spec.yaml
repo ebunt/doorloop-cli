@@ -1,0 +1,868 @@
+name: doorloop
+display_name: DoorLoop
+base_url: https://app.doorloop.com/api
+description: Property management platform — leases, tenants, units, properties, and full financial accounting
+version: v1
+
+auth:
+  type: bearer_token
+  header: Authorization
+  in: header
+  env_vars:
+    - DOORLOOP_TOKEN
+
+resources:
+  accounts:
+    description: Chart-of-accounts entries
+    endpoints:
+      list:
+        method: GET
+        path: /accounts
+        params:
+          - name: filter_group
+            in: query
+            description: Filter by portfolio ID
+          - name: filter_text
+            in: query
+            description: Filter by account name
+      get:
+        method: GET
+        path: /accounts/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+            description: Account ID
+
+  portfolios:
+    description: Portfolio groupings of properties
+    endpoints:
+      list:
+        method: GET
+        path: /portfolios
+        params:
+          - name: filter_text
+            in: query
+            description: Filter by portfolio name
+      get:
+        method: GET
+        path: /portfolios/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /portfolios
+      update:
+        method: PUT
+        path: /portfolios/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /portfolios/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  properties:
+    description: Physical properties — residential or commercial
+    endpoints:
+      list:
+        method: GET
+        path: /properties
+        params:
+          - name: filter_text
+            in: query
+            description: Filter by property name
+          - name: filter_group
+            in: query
+            description: Filter by portfolio ID
+          - name: filter_class
+            in: query
+            description: Filter by class (RESIDENTIAL or COMMERCIAL)
+          - name: filter_owner
+            in: query
+            description: Filter by owner ID
+      get:
+        method: GET
+        path: /properties/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  units:
+    description: Individual rental units within properties
+    endpoints:
+      list:
+        method: GET
+        path: /units
+        params:
+          - name: filter_group
+            in: query
+            description: Filter by portfolio ID
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+          - name: filter_owner
+            in: query
+            description: Filter by owner ID
+          - name: filter_text
+            in: query
+            description: Filter by unit name
+      get:
+        method: GET
+        path: /units/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  tenants:
+    description: Tenants — active lease tenants and prospects
+    endpoints:
+      list:
+        method: GET
+        path: /tenants
+        params:
+          - name: filter_group
+            in: query
+            description: Filter by portfolio ID
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+          - name: filter_lease
+            in: query
+            description: Filter by lease ID
+          - name: filter_text
+            in: query
+            description: Filter by tenant name or email
+          - name: filter_unit
+            in: query
+            description: Filter by unit ID
+          - name: filter_type
+            in: query
+            description: Filter by type (LEASE_TENANT or PROSPECT_TENANT)
+      get:
+        method: GET
+        path: /tenants/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /tenants
+      update:
+        method: PUT
+        path: /tenants/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /tenants/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  leases:
+    description: Lease agreements linking tenants to units
+    endpoints:
+      list:
+        method: GET
+        path: /leases
+        params:
+          - name: filter_group
+            in: query
+            description: Filter by portfolio ID
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+          - name: filter_owner
+            in: query
+            description: Filter by owner ID
+          - name: filter_text
+            in: query
+            description: Filter by lease name
+          - name: filter_start_date_from
+            in: query
+            description: Start date range from (YYYY-MM-DD)
+          - name: filter_start_date_to
+            in: query
+            description: Start date range to (YYYY-MM-DD)
+          - name: filter_end_date_from
+            in: query
+            description: End date range from (YYYY-MM-DD)
+          - name: filter_end_date_to
+            in: query
+            description: End date range to (YYYY-MM-DD)
+          - name: filter_propertyClass
+            in: query
+            description: Filter by property class (RESIDENTIAL or COMMERCIAL)
+          - name: filter_unit
+            in: query
+            description: Filter by unit ID
+          - name: filter_tenant
+            in: query
+            description: Filter by tenant ID
+          - name: filter_outstandingBalanceGreaterThan
+            in: query
+            description: Filter by minimum outstanding balance
+          - name: filter_status
+            in: query
+            description: Filter by status (ACTIVE or INACTIVE)
+          - name: filter_term
+            in: query
+            description: Filter by term (Rollover or AtWill)
+      get:
+        method: GET
+        path: /leases/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      tenants:
+        method: GET
+        path: /leases/tenants
+        params:
+          - name: filter_group
+            in: query
+            description: Filter by portfolio ID
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+          - name: filter_lease
+            in: query
+            description: Filter by lease ID
+          - name: filter_status
+            in: query
+            description: Filter by status
+          - name: filter_text
+            in: query
+            description: Filter by tenant name/email
+          - name: filter_movedInAt_from
+            in: query
+            description: Move-in date from (YYYY-MM-DD)
+          - name: filter_movedInAt_to
+            in: query
+            description: Move-in date to (YYYY-MM-DD)
+          - name: filter_movedOutAt_from
+            in: query
+            description: Move-out date from (YYYY-MM-DD)
+          - name: filter_movedOutAt_To
+            in: query
+            description: Move-out date to (YYYY-MM-DD)
+      move_in:
+        method: POST
+        path: /leases/move-in
+      move_out:
+        method: POST
+        path: /leases/move-out
+
+  owners:
+    description: Property owners
+    endpoints:
+      list:
+        method: GET
+        path: /owners
+        params:
+          - name: filter_text
+            in: query
+            description: Filter by owner name or email
+          - name: filter_group
+            in: query
+            description: Filter by portfolio ID
+      get:
+        method: GET
+        path: /owners/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /owners
+      update:
+        method: PUT
+        path: /owners/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /owners/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  users:
+    description: DoorLoop users (staff)
+    endpoints:
+      list:
+        method: GET
+        path: /users
+        params:
+          - name: filter_text
+            in: query
+            description: Filter by user name or email
+      get:
+        method: GET
+        path: /users/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /users
+      update:
+        method: PUT
+        path: /users/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /users/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  vendors:
+    description: Vendors and contractors
+    endpoints:
+      list:
+        method: GET
+        path: /vendors
+        params:
+          - name: filter_text
+            in: query
+            description: Filter by vendor name
+      get:
+        method: GET
+        path: /vendors/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /vendors
+      update:
+        method: PUT
+        path: /vendors/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /vendors/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  lease_payments:
+    description: Rent payments recorded against leases
+    endpoints:
+      list:
+        method: GET
+        path: /lease-payments
+        params:
+          - name: filter_lease
+            in: query
+            description: Filter by lease ID
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+          - name: filter_group
+            in: query
+            description: Filter by portfolio ID
+          - name: filter_date_from
+            in: query
+            description: Payment date from (YYYY-MM-DD)
+          - name: filter_date_to
+            in: query
+            description: Payment date to (YYYY-MM-DD)
+      get:
+        method: GET
+        path: /lease-payments/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /lease-payments
+      update:
+        method: PUT
+        path: /lease-payments/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /lease-payments/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  lease_charges:
+    description: Charges applied to leases (rent, fees, etc.)
+    endpoints:
+      list:
+        method: GET
+        path: /lease-charges
+        params:
+          - name: filter_lease
+            in: query
+            description: Filter by lease ID
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+          - name: filter_date_from
+            in: query
+            description: Charge date from (YYYY-MM-DD)
+          - name: filter_date_to
+            in: query
+            description: Charge date to (YYYY-MM-DD)
+      get:
+        method: GET
+        path: /lease-charges/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /lease-charges
+      update:
+        method: PUT
+        path: /lease-charges/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /lease-charges/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  lease_credits:
+    description: Credits applied to leases
+    endpoints:
+      list:
+        method: GET
+        path: /lease-credits
+        params:
+          - name: filter_lease
+            in: query
+            description: Filter by lease ID
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+      get:
+        method: GET
+        path: /lease-credits/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /lease-credits
+      update:
+        method: PUT
+        path: /lease-credits/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /lease-credits/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  lease_returned_payments:
+    description: Returned/bounced payments on leases
+    endpoints:
+      list:
+        method: GET
+        path: /lease-returned-payments
+        params:
+          - name: filter_lease
+            in: query
+            description: Filter by lease ID
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+      get:
+        method: GET
+        path: /lease-returned-payments/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /lease-returned-payments
+      update:
+        method: PUT
+        path: /lease-returned-payments/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /lease-returned-payments/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  expenses:
+    description: Property operating expenses
+    endpoints:
+      list:
+        method: GET
+        path: /expenses
+        params:
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+          - name: filter_group
+            in: query
+            description: Filter by portfolio ID
+          - name: filter_date_from
+            in: query
+            description: Expense date from (YYYY-MM-DD)
+          - name: filter_date_to
+            in: query
+            description: Expense date to (YYYY-MM-DD)
+          - name: filter_vendor
+            in: query
+            description: Filter by vendor ID
+      get:
+        method: GET
+        path: /expenses/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /expenses
+      update:
+        method: PUT
+        path: /expenses/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /expenses/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  vendor_bills:
+    description: Bills from vendors against properties
+    endpoints:
+      list:
+        method: GET
+        path: /vendor-bills
+        params:
+          - name: filter_vendor
+            in: query
+            description: Filter by vendor ID
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+          - name: filter_date_from
+            in: query
+            description: Bill date from (YYYY-MM-DD)
+          - name: filter_date_to
+            in: query
+            description: Bill date to (YYYY-MM-DD)
+      get:
+        method: GET
+        path: /vendor-bills/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /vendor-bills
+      update:
+        method: PUT
+        path: /vendor-bills/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /vendor-bills/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  vendor_credits:
+    description: Credits from vendors
+    endpoints:
+      list:
+        method: GET
+        path: /vendor-credits
+        params:
+          - name: filter_vendor
+            in: query
+            description: Filter by vendor ID
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+      get:
+        method: GET
+        path: /vendor-credits/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /vendor-credits
+      update:
+        method: PUT
+        path: /vendor-credits/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /vendor-credits/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  tasks:
+    description: Maintenance and operational tasks
+    endpoints:
+      list:
+        method: GET
+        path: /tasks
+        params:
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+          - name: filter_group
+            in: query
+            description: Filter by portfolio ID
+          - name: filter_assignee
+            in: query
+            description: Filter by assigned user ID
+          - name: filter_status
+            in: query
+            description: Filter by status
+          - name: filter_text
+            in: query
+            description: Filter by task title
+          - name: filter_due_date_from
+            in: query
+            description: Due date from (YYYY-MM-DD)
+          - name: filter_due_date_to
+            in: query
+            description: Due date to (YYYY-MM-DD)
+      get:
+        method: GET
+        path: /tasks/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /tasks
+      update:
+        method: PUT
+        path: /tasks/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /tasks/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      post_update:
+        method: POST
+        path: /tasks/update
+
+  notes:
+    description: Notes attached to records
+    endpoints:
+      list:
+        method: GET
+        path: /notes
+        params:
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+          - name: filter_lease
+            in: query
+            description: Filter by lease ID
+          - name: filter_tenant
+            in: query
+            description: Filter by tenant ID
+      get:
+        method: GET
+        path: /notes/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /notes
+      update:
+        method: PUT
+        path: /notes/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /notes/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  files:
+    description: Documents and file attachments
+    endpoints:
+      list:
+        method: GET
+        path: /files
+        params:
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+          - name: filter_lease
+            in: query
+            description: Filter by lease ID
+      get:
+        method: GET
+        path: /files/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /files
+      update:
+        method: PUT
+        path: /files/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /files/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  communication_logs:
+    description: Logged communications with tenants and owners
+    endpoints:
+      list:
+        method: GET
+        path: /communication-logs
+        params:
+          - name: filter_tenant
+            in: query
+            description: Filter by tenant ID
+          - name: filter_lease
+            in: query
+            description: Filter by lease ID
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+      get:
+        method: GET
+        path: /communication-logs/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      create:
+        method: POST
+        path: /communication-logs
+      update:
+        method: PUT
+        path: /communication-logs/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+      delete:
+        method: DELETE
+        path: /communication-logs/{id}
+        params:
+          - name: id
+            in: path
+            required: true
+
+  reports:
+    description: Generated financial and operational reports
+    endpoints:
+      list:
+        method: GET
+        path: /reports
+        params:
+          - name: filter_property
+            in: query
+            description: Filter by property ID
+          - name: filter_group
+            in: query
+            description: Filter by portfolio ID
+          - name: filter_date_from
+            in: query
+            description: Report period from (YYYY-MM-DD)
+          - name: filter_date_to
+            in: query
+            description: Report period to (YYYY-MM-DD)
