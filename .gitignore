@@ -1,8 +1,8 @@
 # Binaries
 bin/
 build/
-doorloop-pp-cli
-doorloop-pp-mcp
+/doorloop-pp-cli
+/doorloop-pp-mcp
 
 # Local Data/Cache
 *.db
