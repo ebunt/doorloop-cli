@@ -1,11 +1,17 @@
 # doorloop-pp-cli Usage Guide
 
 ## Build the CLI and MCP binaries
+
+```bash
 make build-all
+```
 
 ## Install the binaries
-make install      # Installs doorloop-pp-cli
+
+```bash
+make install      # Installs doorloop-pp-cli      
 make install-mcp  # Installs doorloop-pp-mcp
+```
 
 ## Setup
 Set your API token (generate in DoorLoop Settings → API):
