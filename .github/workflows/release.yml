@@ -31,7 +31,3 @@ jobs:
                   args: release --clean
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  # Note: If you want to use the 'brews' feature in .goreleaser.yaml,
-                  # you will need to add a secret named HOMEBREW_TAP_GITHUB_TOKEN
-                  # to your repo with permission to push to the tap repository.
-                  # HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
